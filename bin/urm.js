@@ -1,10 +1,12 @@
 require('../lib/Prototypes');
 
 const reader = require("../io/Reader"),
-      URM = require("../URM/FormalURM"),
+      FormalURM = require("../URM/FormalURM"),
+      URM = require("../URM/urmModel"),
       debug = require("debug")("URM");
 
 var content = reader("./examples/test.urm"),
-    machine = new URM(content);
+    machineConfs = new FormalURM(content),
+    urm = new URM(machineConfs);
 
-debug(machine);
+debug(urm)
