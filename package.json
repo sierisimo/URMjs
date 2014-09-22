@@ -1,0 +1,27 @@
+{
+  "name":"URMjs",
+  "description": "A complete and full implementation of URM (Unlimited Register Machine) in JavaScript and Node.js",
+  "version":"0.0.1",
+  "url":"https://github.com/sierisimo/URMjs",
+  "email":"sierisimo@gmail.com",
+  "license":"GPLv2",
+  "private":true,
+  "author":{
+    "name":"Sinuhe Valencia",
+    "email":"sierisimo@gmail.com"
+  },
+  "bin":{
+    "URMjs":"./bin/urm"
+  },
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/sierisimo/URMjs"
+  },
+  "scripts":{
+    "start":"node ./bin/urm",
+    "debug":"DEBUG=MODEL node ./bin/urm"
+  },
+  "dependencies":{
+    "debug":"*"
+  }
+}
