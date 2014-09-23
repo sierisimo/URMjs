@@ -4,6 +4,7 @@ var Operations = {
   Z: function(s){
     var n = realVal(s);
     this.registers[n-1] = 0;
+    this.position++;
   }
 };
 

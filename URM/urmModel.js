@@ -77,7 +77,7 @@ URModel.method('advance',function(){
 
 function makeLog(){
   var stp = this.step,
-      inst = this.position+1,
+      inst = this.position,
       rgstr = "["+this.registers.toString()+"]",
       finalStr = "";
 
@@ -93,10 +93,7 @@ URModel.method('log',function(){
 });
 
 URModel.method('print',function(){
-  var that = this;
-  setTimeout(function(){
-    console.log(makeLog.apply(that));
-  },2000);
+  console.log(makeLog.apply(this));
 });
 
 URModel.method('run',function(){
@@ -104,6 +101,7 @@ URModel.method('run',function(){
   this.advance();
   this.log();
   this.print();
+  debug(this);
   //}
 });
 
