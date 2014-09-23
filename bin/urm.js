@@ -9,4 +9,5 @@ var content = reader("./examples/test.urm"),
     machineConfs = new FormalURM(content),
     urm = new URM(machineConfs);
 
-debug(urm)
+debug(urm);
+urm.run();

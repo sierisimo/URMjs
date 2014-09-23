@@ -9,7 +9,8 @@
  *
  * Description:
  *   This file contains the functions and methods of the URM formal object, this object only contains certain elements:
- *     * Initial conditions
+ *     - Initial conditions
+ *     - Set of instructions
 */
 
 

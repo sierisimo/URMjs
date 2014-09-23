@@ -1,3 +1,16 @@
+/**
+ * Author: Sinuhe Jaime Valencia <sierisimo@gmail.com>
+ *
+ * Date: 20 - 09 - 2014
+ * LastUpdate: 21 - 09 - 2014
+ * version: 0.0.1~alpha
+ *
+ * Name: urmModel.js
+ *
+ * Description:
+ *   This is the machine as we now. This machine makes the operations and makes the steps.
+*/
+
 const debug = require("debug")("MODEL"),
       FormalURM = require('./FormalURM');
 
@@ -6,18 +19,96 @@ function URModel(urmObject){
     debug("Argument is not an instanceof of FormalURM.");
     throw new Error("Not a formal configuration for making a URM");
   }
-
-  this.conf = urmObject;
+  //Get a new copy of the initial conditiions as an array. This will be the
+  // registers that we'll be modifing
   this.registers = urmObject.conditions.slice();
+  //Internal counter for know how much work we did at the end.
+  this.step = 0;
 
-  //this.Z = require('../Operations/Z');
-  //this.S = require('../Operations/S');
-  //this.T = require('../Operations/T');
-  //this.J = require('../Operations/J');
+  //Position refers to instruction
+  this.position = 0;
+  this.current = "";
+
+  this.logs = [];
+  //make the configuration only readable
+  this.__defineGetter__('configuration',function(){
+    return urmObject;
+  });
+
+  //make the set of instructions only readable but avalible on this urm
+  this.__defineGetter__('instructions',function(){
+    return urmObject.instructions;
+  });
 }
 
-URModel.method('next',function(){
+//Append the method advance to every URM
+/*
+ * Advance is in charge of make the next step and execute every operation
+ *
+*/
+URModel.method('advance',function(){
+  var operations = require('./Operations');
 
+  this.current = this.instructions[this.position];
+  this.step++;
+
+  debug(this.instructions,this.position-1);
+
+  if(this.current.indexOf("(")  === -1 || this.current.indexOf(")")===-1){
+    debug("Malformed operation at:"+ (this.position+1));
+    throw new Error("Malformed operation at line:"+ (this.position+1) + " in source file. You should call 'Operation(n)' or just: 'J(n,m,q)' for example.");
+  }
+
+  var iElmnts = this.current.split('('),
+      op = iElmnts[0],
+      args = iElmnts[1].split(")")[0];
+
+  if(op.length < 1 || !(op in operations)){
+    throw new Error("Operation "+op+" not defined")
+  }
+
+  if(args.length < 1){
+    debug("Operation with no arguments");
+    throw new Error("Can't operate if arguments aren't provided for operation "+op+".");
+  }
+
+  operations[op].call(this,args);
+});
+
+function makeLog(){
+  var stp = this.step,
+      inst = this.position+1,
+      rgstr = "["+this.registers.toString()+"]",
+      finalStr = "";
+
+  finalStr = "Step "+stp+" >>";
+  finalStr+="\tI"+inst+":"+this.current;
+  finalStr+="\n\t->  "+rgstr;
+
+  return finalStr;
+}
+
+URModel.method('log',function(){
+  this.logs.push(makeLog.apply(this));
+});
+
+URModel.method('print',function(){
+  var that = this;
+  setTimeout(function(){
+    console.log(makeLog.apply(that));
+  },2000);
+});
+
+URModel.method('run',function(){
+  //while(this.position < this.instructions.length){
+  this.advance();
+  this.log();
+  this.print();
+  //}
+});
+
+URModel.__defineGetter__("version",function(){
+  return "0.0.1~alpha";
 });
 
 module.exports = URModel;

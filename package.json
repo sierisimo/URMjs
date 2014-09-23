@@ -19,8 +19,7 @@
   },
   "scripts":{
     "start":"node ./bin/urm",
-    "debug":"DEBUG=MODEL,IO,URM,FormalURM node ./bin/urm",
-    "strict":"DEBUG=MODEL,IO,URM,FormalURM STRICT=true node ./bin/urm"
+    "debug":"DEBUG=MODEL,IO,URM,FormalURM,OPS node ./bin/urm"
   },
   "dependencies":{
     "debug":"*"
