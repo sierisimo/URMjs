@@ -3,7 +3,7 @@
  *
  * Date: 22 - 09 - 2014
  * LastUpdate: 23 - 09 - 2014
- * version: 0.4.0~beta
+ * version: 1.0.0~rc
  *
  * Name: Operations.js
  *
@@ -88,6 +88,32 @@ var Operations = {
     //Asing positions on our "registers"
     this.registers[n[1]-1] = this.registers[n[0]-1];
     this.position++;
+  },
+  /*
+   * J(m,n,q):
+   *     If register at "m" and register at "n" are equal, go to instruction q.
+   */
+  J: function(s){
+    var n = realVal(s);
+
+    //If something went wrong, n will be -1 or something that isn't an array of length 3
+    if(n === -1 || !(n instanceof Array) || n.length !== 3){
+      debug("Arguments aren't correct or neither a group of 3 numbers");
+      throw new Error("Arguments for operation are malformed, must be: J(number1,number2,instruction)");
+    }
+
+    //Asign values to compare, just for look of the code
+    var x = this.registers[n[0]-1],
+        y = this.registers[n[1]-1],
+        q = n[2];
+    //If register at m is equals to register at n, change position of pointer
+    if(x === y){
+      debug("Jumping to instruction:"+q);
+      this.position = q-1;
+    }else{
+      //Else, just go to next step
+      this.position++;
+    }
   }
 };
 
@@ -135,7 +161,7 @@ function realVal(str){
 
 //Version of code, read-only
 Operations.__defineGetter__('version',function(){
-  return "0.4.0~beta";
+  return "1.0.0~rc";
 });
 
 module.exports = Operations;
