@@ -69,6 +69,9 @@ var Operations = {
         this.registers.push(0);
       }
     }
+    if(!this.registers[n-1]){
+      this.registers[n-1] = 0;
+    }
     //Add one to register n. Remember, for us: n is equals to n-1, because we started at position 0
     this.registers[n-1]++;
     this.position++;
