@@ -5,6 +5,11 @@ var Operations = {
     var n = realVal(s);
     this.registers[n-1] = 0;
     this.position++;
+  },
+  S: function(s){
+    var n = realVal(s);
+    this.registers[n-1]++;
+    this.position++;
   }
 };
 

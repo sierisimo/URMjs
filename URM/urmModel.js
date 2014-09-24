@@ -82,7 +82,7 @@ function makeLog(){
       finalStr = "";
 
   finalStr = "Step "+stp+" >>";
-  finalStr+="\tI"+inst+":"+this.current;
+  finalStr+="\n\tI"+inst+":"+this.current;
   finalStr+="\n\t->  "+rgstr;
 
   return finalStr;
@@ -97,12 +97,13 @@ URModel.method('print',function(){
 });
 
 URModel.method('run',function(){
-  //while(this.position < this.instructions.length){
-  this.advance();
-  this.log();
-  this.print();
-  debug(this);
-  //}
+  while(this.position < this.instructions.length){
+    this.advance();
+    this.log();
+    this.print();
+    //debug(this);
+    debug(this.position+"::"+this.instructions.length);
+  }
 });
 
 URModel.__defineGetter__("version",function(){
