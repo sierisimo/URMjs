@@ -25,37 +25,7 @@ function URM(arr){
     debug("Array has 0 elements.");
     throw new Error("The array provided doesn't looks like having elements. Cannot create a new URM based on that");
   }
-  /*
-  //If you want to run on strict mode... that's lame... but it's ok.
-  if(process.env.STRICT === 'true'){
-    var inConf = arr.shift();
-    try{
-      var rules = inConf.split('<')[1].split(">")[0],
-          elements = rules.split(',');
 
-      if(elements.length !== 3){
-        debug("Not enough elements on your initial configuration");
-        throw new Error("Malformed configuration, check if total elements is 3");
-      }
-
-      var P = new Number(elements[0]),
-          M = new Number(elements[1]),
-          PC= new Number(elements[2]);
-
-      if(P.valueOf() < PC.valueOf()) {
-        throw "URM Finished.";
-      }
-
-      this.P = P.valueOf();
-      this.M = M.valueOf();
-      this.PC = PC.valueOf();
-
-    }catch(e){
-      debug("Malformed configuration, check if format is correct");
-      throw new Error("The URM Cofiguration is malformed, check your content");
-    }
-  }
-  */
   // Extract conditions and transform from string to array.
   var conStr = arr.shift();
   try{
@@ -86,9 +56,7 @@ function URM(arr){
 
   this.conditions = conditions;
 
-  //if(!this.M) this.M = conditions.length;
   this.M = conditions.length;
-  //if(!this.PC) this.PC = 1;
   this.PC = 1;
   this.j = 1;
 
@@ -108,14 +76,7 @@ function URM(arr){
   this.instructions = instructions;
 
   this.P = instructions.length;
-  /*
-  if(process.env.STRICT === 'true'){
-    if(instructions.length < this.P){
-      throw new Error("Running in strict mode, the number of instructions can't be lower than the P provided");
-    }
-    this.instructions = instructions.slice(0,this.P);
-  }
-  */
+
 }
 
 URM.prototype.toString = function(){

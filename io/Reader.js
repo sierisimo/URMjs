@@ -66,7 +66,7 @@ function Reader(file){
 }
 
 
-//Current version of the function
+//Current version of the function, read-only
 Reader.__defineGetter__("version",function(){
   return "0.1.0~beta";
 });
